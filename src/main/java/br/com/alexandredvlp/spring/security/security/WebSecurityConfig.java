@@ -18,10 +18,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ImplementsUserDetailsService userDetailsService;
 
+    private static final String[] AUTH_LIST = {"/", "/index"};
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(AUTH_LIST).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().permitAll()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
